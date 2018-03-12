@@ -1,4 +1,4 @@
-База данных, название: 'burger'
+База данных, name: '**burger**'
 
 `CREATE TABLE users
 (
@@ -19,4 +19,4 @@ CREATE UNIQUE INDEX users_email_uindex ON users (email);
     comment_order VARCHAR(255)
 );`
 
-Админ панель - /admin.php
+Админ панель - **/admin.php**

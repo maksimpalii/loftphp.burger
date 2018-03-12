@@ -69,41 +69,29 @@ function logMsg($contentMsg)
     }
 }
 
-if (!empty($name) && !empty($phone) && !empty($email) && !empty($street) && !empty($home) && !empty($part) && !empty($appt) && !empty($floor) && !empty($comment)) {
+if (!empty($name) && !empty($phone) && !empty($email) && !empty($street) && !empty($home) && !empty($part) && !empty($appt) && !empty($floor)) {
     $verification->execute(['email' => $email]);
     $data = $verification->fetch(PDO::FETCH_ASSOC);
     if ($data['email'] === $email) {
-        $user_id = $data['id'];
-        $order->execute(['user_id' => $user_id, 'adress_order' => $adress, 'comment_order' => $comment, 'detail_order' => $detail_order]);
-        $lastOrderId = $pdo->lastInsertId();
-        $orderselect->execute(['user_id' => $user_id]);
-        $ordersId = $orderselect->fetchAll(PDO::FETCH_ASSOC);
-        $orderCount = count($ordersId);
-        $subject = 'Заказ № ' . $lastOrderId;
-        $content .= "\n" . 'Детали заказа: ' . "\n" . $detail_order . "\n";
-        $content .= msgThanks($orderCount);
-        $contentMsg = '<h2>' . $subject . '</h2>' . "\n" . $contacts . $content;
-        logMsg($contentMsg);
-        //mail('maksim.palii@gmail.com', $subject, $contentMsg);
         echo 'message';
     } else {
         $registr->execute(['name' => $name, 'number' => $phone, 'email' => $email]);
         $verification->execute(['email' => $email]);
         $data = $verification->fetch(PDO::FETCH_ASSOC);
-        $user_id = $data['id'];
-        $order->execute(['user_id' => $user_id, 'adress_order' => $adress, 'comment_order' => $comment, 'detail_order' => $detail_order]);
-        $lastOrderId = $pdo->lastInsertId();
-        $orderselect->execute(['user_id' => $user_id]);
-        $ordersId = $orderselect->fetchAll(PDO::FETCH_ASSOC);
-        $orderCount = count($ordersId);
-        $subject = 'Заказ № ' . $lastOrderId;
-        $content .= "\n" . 'Детали заказа: ' . "\n" . $detail_order . "\n";
-        $content .= msgThanks($orderCount);
-        $contentMsg = '<h2>' . $subject . '</h2>' . "\n" . $contacts . $content;
-        logMsg($contentMsg);
-        // mail('maksim.palii@gmail.com', $subject, $contentMsg);
         echo 'message & registration';
     }
+    $user_id = $data['id'];
+    $order->execute(['user_id' => $user_id, 'adress_order' => $adress, 'comment_order' => $comment, 'detail_order' => $detail_order]);
+    $lastOrderId = $pdo->lastInsertId();
+    $orderselect->execute(['user_id' => $user_id]);
+    $ordersId = $orderselect->fetchAll(PDO::FETCH_ASSOC);
+    $orderCount = count($ordersId);
+    $subject = 'Заказ № ' . $lastOrderId;
+    $content .= "\n" . 'Детали заказа: ' . "\n" . $detail_order . "\n";
+    $content .= msgThanks($orderCount);
+    $contentMsg = '<h2>' . $subject . '</h2>' . "\n" . $contacts . $content;
+    logMsg($contentMsg);
+    mail('maksim.palii@gmail.com', $subject, $contentMsg);
 
 } elseif (!empty($name) && !empty($phone) && !empty($email)) {
     $verification->execute(['email' => $email]);
@@ -115,7 +103,7 @@ if (!empty($name) && !empty($phone) && !empty($email) && !empty($street) && !emp
         echo 'registration';
     }
 } else {
-    echo 'Заполните поля';
+    echo 'not empty';
 }
 
 die();
