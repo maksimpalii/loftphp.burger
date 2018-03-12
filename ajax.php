@@ -91,7 +91,7 @@ if (!empty($name) && !empty($phone) && !empty($email) && !empty($street) && !emp
     $content .= msgThanks($orderCount);
     $contentMsg = '<h2>' . $subject . '</h2>' . "\n" . $contacts . $content;
     logMsg($contentMsg);
-    mail('maksim.palii@gmail.com', $subject, $contentMsg);
+    mail('simple@gmail.com', $subject, $contentMsg);
 
 } elseif (!empty($name) && !empty($phone) && !empty($email)) {
     $verification->execute(['email' => $email]);
